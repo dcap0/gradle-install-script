@@ -1,0 +1,21 @@
+#!/bin/bash
+
+if [ $# -ne 1 ]
+	then
+		echo "Please provide the version of gradle you wish to download"
+		exit 1
+fi
+
+PATH='$PATH'
+
+echo "Downloading file to /tmp/gradle-$1-bin.zip"
+/usr/bin/wget -O "/tmp/gradle-$1-bin.zip" https://services.gradle.org/distributions/gradle-$1-bin.zip
+echo "export PATH=\"${PATH}:/opt/gradle/gradle-$1/bin\"" >> $HOME/.bashrc
+source $HOME/.bashrc
+
+echo "Creating Gradle's home folder at /opt/gradle"
+/usr/bin/sudo mkdir /opt/gradle
+/usr/bin/sudo /usr/bin/unzip -d /opt/gradle/ /tmp/gradle-$1-bin.zip
+
+echo "Gradle Install Complete!"
+echo "Please run gradle --version to confirm install!"
